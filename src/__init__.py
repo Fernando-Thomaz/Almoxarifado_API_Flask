@@ -1,5 +1,5 @@
 from flask import Flask
-from src.database.connection import db, Config
+from database.connection import db, Config
 
 def create_app():
     # cria o app

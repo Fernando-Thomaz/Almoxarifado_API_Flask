@@ -15,7 +15,7 @@ services:
     backe_end:
       build: .
       restart: always
-      container_name: flask_python
+      container_name: fernando_db
       ports:
         - "5012:5000"
       env_file:
