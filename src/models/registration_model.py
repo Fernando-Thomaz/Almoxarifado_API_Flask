@@ -2,7 +2,7 @@ from sqlalchemy import Column, String, Integer, Boolean, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
 from database.connection import db
 
-class Registration(db.Model):
+class RegistrationModel(db.Model):
     __tablename__ = "registration"
 
     regi_id = db.Column("regi_id", Integer, primary_key=True, autoincrement=True)

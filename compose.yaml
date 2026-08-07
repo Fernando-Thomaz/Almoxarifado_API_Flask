@@ -1,7 +1,7 @@
 services:
   db:
     image: postgres:18.4
-    container_name: db
+    container_name: fernando_db
     restart: always
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
@@ -12,15 +12,15 @@ services:
     volumes:
       - psql_data:/var/lib/postgresql/data
 
-    backe_end:
-      build: .
-      restart: always
-      container_name: fernando_db
-      ports:
-        - "5012:5000"
-      env_file:
-      - path: .env
-        required: false
+  backe_end:
+    build: .
+    restart: always
+    container_name: fernando_backend
+    ports:
+      - "5012:5000"
+    env_file:
+    - path: .env
+      required: false
 
 volumes:
   psql_data:

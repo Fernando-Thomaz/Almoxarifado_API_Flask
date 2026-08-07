@@ -1,16 +1,24 @@
 from flask import Flask
-from database.connection import db, Config
+from database.connection import db, ma, Config
+from flask_marshmallow import Marshmallow
+
+# define marshmallow
+ma = Marshmallow()
 
 def create_app():
-    # cria o app
+    # create app
     app = Flask(__name__)
 
-    # pega a url do banco do objeto Config
+    # get URL from object Config
     app.config.from_object(Config)
 
-    # cria o banco dentro do app
+    # create db in app
     db.init_app(app)
 
+    # create marshmallow in app
+    ma.init_app(app)
+
+    # route
     @app.get("/")
     def home():
         return {"mensagem": "funcionando"}, 200

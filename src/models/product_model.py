@@ -2,7 +2,7 @@ from sqlalchemy import Column, Integer, String, Numeric, ForeignKey
 from sqlalchemy.orm import relationship
 from database.connection import db
 
-class Product(db.Model):
+class ProductModel(db.Model):
     __tablename__ = "product"
 
     prod_id = db.Column("prod_id", Integer, primary_key=True, autoincrement=True)

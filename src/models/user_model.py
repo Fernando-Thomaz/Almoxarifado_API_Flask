@@ -2,7 +2,7 @@ from sqlalchemy import Column, Integer, String
 from database.connection import db
 from passlib.context import CryptoContext
 
-class User(db.Model):
+class UserModel(db.Model):
     __tablename__ = "user"
 
     user_id = db.Column("user_id", Integer, primary_key=True, autoincrement=True)

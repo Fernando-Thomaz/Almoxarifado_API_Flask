@@ -2,7 +2,7 @@ from sqlalchemy import Column, String, Integer
 from sqlalchemy.orm import relationship
 from database.connection import db
 
-class Category(db.Model):
+class CategoryModel(db.Model):
     __tablename__ = "category"
 
     cate_id = db.Column("cate_id", Integer, primary_key=True, autoincrement=True)
