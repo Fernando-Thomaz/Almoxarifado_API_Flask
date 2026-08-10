@@ -3,7 +3,6 @@ from database.connection import db, ma, Config
 from flask_marshmallow import Marshmallow
 from views import category_router, user_router, product_router, registration_router
 
-
 # define marshmallow
 ma = Marshmallow()
 
@@ -12,10 +11,10 @@ def create_app():
     app = Flask(__name__)
 
     # define routes
-    app.register_blueprint(user_router, url_prefix="user")
-    app.register_blueprint(category_router, url_prefix="category")
-    app.register_blueprint(product_router, url_prefix="product")
-    app.register_blueprint(registration_router, url_prefix="registration")
+    app.register_blueprint(user_router, url_prefix="/user")
+    app.register_blueprint(category_router, url_prefix="/category")
+    app.register_blueprint(product_router, url_prefix="/product")
+    app.register_blueprint(registration_router, url_prefix="/registration")
 
     # get URL from object Config
     app.config.from_object(Config)

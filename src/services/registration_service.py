@@ -16,11 +16,11 @@ def list_registration():
     return RegistrationModel.session.query.all()
 
 # function for list registration with date
-def list_registration(registration):
+def list_registration_date(registration):
     return RegistrationModel.session.query.filter_by(regi_dt=registration.dt).first()
 
 # function for list registration with type
-def list_registration(registration):
+def list_registration_type(registration):
     return RegistrationModel.session.query.filter_by(regi_type=registration.type).first()
 
 # function for list registration with product

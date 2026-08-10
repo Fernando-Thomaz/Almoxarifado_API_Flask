@@ -25,7 +25,7 @@ def list_product_category(category_id):
 
 # UPDATE
 # function for update category
-def update_category(id, new_category):
+def update_product(id, new_category):
     product_db = ProductModel.session.get(id)
     if product_db:
         product_db.prod_name = new_category["name"]
