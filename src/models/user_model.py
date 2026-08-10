@@ -8,20 +8,20 @@ class UserModel(db.Model):
     user_id = db.Column("user_id", Integer, primary_key=True, autoincrement=True)
     user_name = db.Column("user_name", String(120), nullable=False)
     user_email = db.Column("user_email", String(120), nullable=False, unique=True)
-    user_senha = db.Column("user_senha", String(255), nullable=False)
+    user_password = db.Column("user_password", String(255), nullable=False)
 
     # set cryptocontext
     pwd_context = CryptoContext(schemes=["argon2"], deprecated="auto")
 
     # hash password
-    def gen_senha(self, user_senha):
-        self.user_senha = self.pwd_context.hash(user_senha)
+    def gen_password(self, user_password):
+        self.user_password = self.pwd_context.hash(user_password)
 
     # verify password
-    def ver_senha(self, user_senha):
-        return self.pwd_context.verify(user_senha, self.user_senha)
+    def ver_password(self, user_password):
+        return self.pwd_context.verify(user_password, self.user_password)
 
-    def __init__(self, user_name, user_email, user_senha):
+    def __init__(self, user_name, user_email, user_password):
         self.user_name = user_name
         self.user_email = user_email
-        self.user_senha = user_senha
+        self.user_password = user_password

@@ -4,6 +4,7 @@ from src.models import ProductModel
 from src.schemas import CategorySchema
 
 class ProductSchema(ma.SQLAlchemyAutoSchema):
+    # foreign key
     category = fields.Nested(
         CategorySchema,
         dump_only=True

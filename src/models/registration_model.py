@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, Integer, Boolean, DateTime, ForeignKey
+from sqlalchemy import Column, Integer, Boolean, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
 from database.connection import db
 
@@ -7,7 +7,7 @@ class RegistrationModel(db.Model):
 
     regi_id = db.Column("regi_id", Integer, primary_key=True, autoincrement=True)
     regi_dt = db.Column("regi_dt", DateTime, nullable=False)
-    regi_tipe = db.Column("regi_tipe", Boolean, nullable=False)
+    regi_type = db.Column("regi_type", Boolean, nullable=False)
     
     # foreign key
     fk_prod_id = db.Column("Produto.prod_id", Integer, ForeignKey("produto.prod_id"), ondelete="CASCADE")
@@ -15,7 +15,7 @@ class RegistrationModel(db.Model):
     # relationship
     product = db.relationship("product", back_populates="registration")
 
-    def __init__(self, regi_dt, regi_tipe, prod_id):
+    def __init__(self, regi_dt, regi_type, prod_id):
         self.regi_dt = regi_dt
-        self.regi_tipe = regi_tipe
+        self.regi_type = regi_type
         self.prod_id = prod_id
