@@ -12,4 +12,5 @@ class UserSchema(ma.SQLAlchemyAutoSchema):
     email = fields.Email(required=True)
     senha = fields.String(required=True)
 
-user_schema = UserSchema(many=True)
+userschema = UserSchema()
+usersschema = UserSchema(many=True)

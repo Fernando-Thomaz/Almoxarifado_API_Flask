@@ -15,6 +15,10 @@ def create_category(category):
 def list_category():
     return CategoryModel.query.all()
 
+# function for list category with description
+def list_category_description(cate_description):
+    return CategoryModel.query.filter_by(cate_description).first()
+
 # UPDATE
 # function for update category
 def update_category(id, new_category):

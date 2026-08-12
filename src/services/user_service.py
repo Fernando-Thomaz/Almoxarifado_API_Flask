@@ -25,7 +25,7 @@ def list_user_email(email):
     return UserModel.session.query.filter_by(user_email=email).first()
 
 # function for list with name
-def list_user_email(name):
+def list_user_name(name):
     return UserModel.session.query.filter_by(user_name=name).first()
 
 # UPDATE

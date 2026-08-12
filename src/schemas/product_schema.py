@@ -21,4 +21,5 @@ class ProductSchema(ma.SQLAlchemyAutoSchema):
     stock = fields.Integer(required=True)
     unit_value = fields.Decimal(places=2, required=True)
 
-produto_schema = ProductSchema(many=True)
+productschema = ProductSchema()
+productsschema = ProductSchema(many=True)

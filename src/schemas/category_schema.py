@@ -10,4 +10,5 @@ class CategorySchema(ma.SQLAlchemyAutoSchema):
 
     description = fields.String(required=True)
 
-category_schema = CategorySchema(many=True)
+categoryschema = CategorySchema()
+categoriesschema = CategorySchema(many=True)

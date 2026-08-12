@@ -19,4 +19,5 @@ class RegistrationSchema(ma.SQLAlchemyAutoSchema):
     dt = fields.DateTime(required=True)
     type = fields.Boolean(required=True)
 
-registration_schema = RegistrationSchema(many=True)
+registrationschema = RegistrationSchema()
+registrationsschema = RegistrationSchema(many=True)

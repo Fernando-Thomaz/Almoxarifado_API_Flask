@@ -1,11 +1,21 @@
-from .user_route import user_router
-from .category_route import category_router
-from .product_route import product_router
-from .registration_route import registration_router
+from .user_view import UserList, UserResource, UserResourceEmail
+from .category_view import CategoryResource, CategoryList
+from .product_view import ProductList, ProductResource, ProductResourceName, ProductResourceCategory
+from .registration_view import RegistrationList, RegistrationResource, RegistrationResourceDate, RegistrationResourceProduct, RegistrationResourceType
 
 __all__ = [
-    "user_router",
-    "category_router",
-    "product_router",
-    "registration_router"
+    "UserList",
+    "UserResource",
+    "UserResourceEmail",
+    "CategoryList",
+    "CategoryResource",
+    "ProductList",
+    "ProductResource",
+    "ProductResourceName",
+    "ProductResourceCategory",
+    "RegistrationList",
+    "RegistrationResource",
+    "RegistrationResourceDate",
+    "RegistrationResourceType",
+    "RegistrationResourceProduct"
 ]
