@@ -2,19 +2,19 @@ from marshmallow import ValidationError
 from flask import request, make_response, jsonify
 from flask_restful import Resource
 from src import api
-from services import create_registration, list_registration, list_registration_date, list_registration_type, list_registration_product, update_registration, delete_registration
-from schemas import registrationsschema, registrationschema
+from src.services import create_registration, list_registration, list_registration_date, list_registration_type, list_registration_product, update_registration, delete_registration
+from src.schemas import registrationsschema, registrationschema
 
 class RegistrationList(Resource):
     def get(self):
         """
-        List registrations
+        List all registrations
         ---
         tags:
           - Registrations
         responses:
           200:
-            description: List Registrations
+            description: List all registrations
           404:
             description: Registration doesnt exists
         """
@@ -27,7 +27,7 @@ class RegistrationList(Resource):
 
     def post(self):
         """
-        Create account
+        Create registration
         ---
         tags:
           - Registrations
@@ -39,14 +39,15 @@ class RegistrationList(Resource):
               type: object
               properties:
                 dt:
-                    type: Date
-                    example: 01
+                  type: string
+                  format: date-time
+                  example: "2026-08-19T11:20:00Z"
                 type:
-                    type: Boolean
-                    example: 1
+                  type: boolean
+                  example: 1
                 product:
-                    type: integer
-                    example: 10
+                  type: integer
+                  example: 10
         responses:
           201:
             description: Registration create
@@ -87,10 +88,11 @@ class RegistrationResource(Resource):
               type: object
               properties:
                 dt:
-                  type: Date
-                  example: 01
+                  type: string
+                  format: date-time
+                  example: "2026-08-19T11:30:00Z"
                 type:
-                  type: Boolean
+                  type: boolean
                   example: 1
                 product:
                   type: integer
@@ -153,7 +155,8 @@ class RegistrationResourceDate(Resource):
       parameters:
         - name: regi_dt
           in: path
-          type: Date
+          type: string
+          format: date
           required: True
       responses:
         200:
@@ -167,7 +170,7 @@ class RegistrationResourceDate(Resource):
           return {"message":"Registration not found"}, 404
 
       return registrationschema.dump(registration), 200
-api.add_resource(RegistrationResourceDate,"/registrations/<date:regi_dt>")
+api.add_resource(RegistrationResourceDate,"/registrations/<string:regi_dt>")
 
 class RegistrationResourceType(Resource):
     def get(self, regi_type):
@@ -179,7 +182,7 @@ class RegistrationResourceType(Resource):
       parameters:
         - name: regi_type
           in: path
-          type: type
+          type: boolean
           required: True
       responses:
         200:

@@ -2,11 +2,22 @@ from flask_restful import Resource
 from flask import request, jsonify, make_response
 from marshmallow import ValidationError
 from src import api
-from schemas import categoryschema, categoriesschema
-from services import create_category, list_category, list_category_description, update_category, delete_category
+from src.schemas import categoryschema, categoriesschema
+from src.services import create_category, list_category, list_category_description, update_category, delete_category
 
 class CategoryList(Resource):
     def get(self):
+        """
+        List all categories
+        ---
+        tags:
+          - Categories
+        responses:
+          200:
+            description: List all categories
+          404:
+            description: Categories doesnt exists
+        """
         categories = list_category()
 
         if not categories:
@@ -15,6 +26,29 @@ class CategoryList(Resource):
         return categoriesschema.dump(categories), 200
 
     def post(self):
+        """
+        Create category
+        ---
+        tags:
+          - Categories
+        parameters:
+          - in: body
+            name: body
+            required: True
+            schema:
+              type: object
+              properties:
+                description: 
+                  type: string
+                  example: example
+        responses:
+          201:
+            description: Create category
+          409:
+            description: Category already exist
+          400:
+            description: Error requisition
+        """
         try:
             category = categoryschema.load(request.get_json())
 
@@ -35,6 +69,31 @@ api.add_resource(CategoryList, "/categories")
 
 class CategoryResource(Resource):
     def put(self, cate_id):
+        """
+        Update category
+        ---
+        tags:
+          - Categories
+        parameters:
+          - name: cate_id
+            in: path
+            type: integer
+            required: True
+          - in: body
+            name: body
+            required: True
+            schema:
+              type: object
+              properties:
+                description:
+                  type: string
+                  example: example
+        responses:
+          200:
+            description: Category update success
+          404:
+            description: Category not found
+        """
         try:
             category = categoryschema.load(request.get_json)
 
@@ -52,6 +111,22 @@ class CategoryResource(Resource):
         return categoryschema.dump(new_category), 200
 
     def delete(self, cate_id):
+        """
+        Delete category
+        ---
+        tags:
+          - Category
+        parameters:
+          - name: cate_id
+            in: path
+            type: integer
+            required: True
+        responses:
+          200:
+            description: Category delete success
+          404:
+            description: Category not found
+        """
         if delete_category(cate_id):
             return {"message":"Category delete success"}, 200
 

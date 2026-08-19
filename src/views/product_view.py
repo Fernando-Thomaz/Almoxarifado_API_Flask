@@ -2,20 +2,20 @@ from src import api
 from flask_restful import Resource
 from flask import request, make_response, jsonify
 from marshmallow import ValidationError
-from schemas import productsschema, productschema
-from services import create_product, list_product, list_product_category, list_product_name, update_product, delete_product
+from src.schemas import productsschema, productschema
+from src.services import create_product, list_product, list_product_category, list_product_name, update_product, delete_product
 
 class ProductList(Resource):
     def get(self):
         """
-        List product
+        List all products
         ---
         tags:
-        - Products
+          - Products
         responses:
-        200:
-            description: List product
-        404:
+          200:
+            description: List all product
+          404:
             description: Product doesnt exists
         """
         products = list_product()
@@ -27,35 +27,35 @@ class ProductList(Resource):
 
     def post(self):
         """
-        Create account
+        Create product
         ---
         tags:
-        - Products
+          - Products
         parameters:
-        - in: body
+          - in: body
             name: body
             required: True
             schema:
-            type: object
-            properties:
+              type: object
+              properties:
                 name: 
-                type: string
-                example: example
+                  type: string
+                  example: example
                 unit_measure:
-                type: string
-                example: meters
+                  type: string
+                  example: meters
                 stock:
-                type: integer
-                example: 10
+                  type: integer
+                  example: 10
                 unit_value:
-                type: Float
-                example: 10,2
+                  type: float
+                  example: 10,2
         responses:
-        201: 
+          201: 
             description: Create account
-        409:
+          409:
             description: Product already exist
-        400:
+          400:
             description: Error requisition
         """
         try:
@@ -82,36 +82,36 @@ class ProductResource(Resource):
         Update product
         ---
         tags:
-        - Products
+          - Products
         parameters:
-        - name: prod_id
+          - name: prod_id
             in: path
             type: integer
             required: True
-        - in: body
+          - in: body
             name: body
             required: True
             schema:
-            type: object
-            schema:
+              type: object
+              schema:
                 name:
-                type: string
-                example: example
+                  type: string
+                  example: example
                 unit_measure:
-                type: string
-                example: string
+                  type: string
+                  example: string
                 stock:
-                type: integer:
-                example: 10
+                  type: integer
+                  example: 10
                 unit_value:
-                type: float
-                example: 10,2
+                  type: float
+                  example: 10,2
         responses:
-        200:
+          200:
             description: Update product
-        400:
+          400:
             description: Error requisition
-        404:
+          404:
             description: Product not found
         """
         try:
@@ -135,6 +135,22 @@ class ProductResource(Resource):
         return productschema.dump(new_product), 200
 
     def delete(self, prod_id):
+        """
+        Product delete
+        ---
+        tags:
+          - Products
+        parameters:
+          - name:
+            in: path
+            type: integer
+            required: True
+        responses:
+          200: 
+            description: Product delete success
+          404:
+            description: Product not found
+        """
         if delete_product(prod_id):
             return {"message":"Product delete success"}, 200
 
@@ -143,16 +159,48 @@ api.add_resource(ProductResource,"/products/<int:prod_id>")
 
 class ProductResourceName(Resource):
     def get(self, prod_name):
+        """
+        Search product by name
+        ---
+        tags:
+          - Products
+        parameters:
+          - name: prod_name
+            in: path
+            type: string
+            required: True
+        responses:
+          200:
+            description: Search product by name
+          404:
+            description: Product not found
+        """
         product = list_product_name(prod_name)
 
         if not product:
             return {"message":"Product not found"}, 404
 
         return productschema.dump(product), 200 
-api.add_resource(ProductResourceName,"/products/<str:prod_name>")
+api.add_resource(ProductResourceName,"/products/<string:prod_name>")
 
 class ProductResourceCategory(Resource):
     def get(self, category):
+        """
+        Search product by category
+        ---
+        tags:
+          - Products
+        parameters:
+          - name: fk_cate_id
+            in: path
+            type: integer
+            required: True
+        responses:
+          200:
+            description: Search product by category
+          404:
+            description: Product not found
+        """
         product = list_product_category(category)
 
         if not product:

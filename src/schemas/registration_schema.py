@@ -1,7 +1,7 @@
 from src import ma
 from src.models import RegistrationModel
 from marshmallow import fields
-from src.schemas import ProductSchema
+from .product_schema import ProductSchema
 
 class RegistrationSchema(ma.SQLAlchemyAutoSchema):
     # foreign key
@@ -16,8 +16,9 @@ class RegistrationSchema(ma.SQLAlchemyAutoSchema):
         fields = ("id", "dt", "type")
         include_fk = True
 
-    dt = fields.DateTime(required=True)
-    type = fields.Boolean(required=True)
+    id = fields.Int(attribute="regi_id", dump_only=True)
+    dt = fields.DateTime(attribute="regi_dt", required=True)
+    type = fields.Boolean(attribute="regi_type", required=True)
 
 registrationschema = RegistrationSchema()
 registrationsschema = RegistrationSchema(many=True)

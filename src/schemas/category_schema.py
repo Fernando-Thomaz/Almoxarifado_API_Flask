@@ -8,7 +8,8 @@ class CategorySchema(ma.SQLAlchemyAutoSchema):
         load_instance = True
         fields = ("id", "description")
 
-    description = fields.String(required=True)
+    id = fields.Int(attribute="cate_id", dump_only=True)
+    description = fields.String(attribute="cate_description", required=True)
 
 categoryschema = CategorySchema()
 categoriesschema = CategorySchema(many=True)

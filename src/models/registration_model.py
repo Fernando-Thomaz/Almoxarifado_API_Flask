@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, Boolean, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
-from database.connection import db
+from src.database.connection import db
 
 class RegistrationModel(db.Model):
     __tablename__ = "registration"
@@ -10,10 +10,10 @@ class RegistrationModel(db.Model):
     regi_type = db.Column("regi_type", Boolean, nullable=False)
     
     # foreign key
-    fk_prod_id = db.Column("Produto.prod_id", Integer, ForeignKey("produto.prod_id"), ondelete="CASCADE")
+    fk_prod_id = db.Column("fk_prod_id", Integer, ForeignKey("product.prod_id", ondelete="CASCADE"))
 
     # relationship
-    product = db.relationship("product", back_populates="registration")
+    product = db.relationship("ProductModel", back_populates="registration")
 
     def __init__(self, regi_dt, regi_type, prod_id):
         self.regi_dt = regi_dt

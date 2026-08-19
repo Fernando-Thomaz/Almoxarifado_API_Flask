@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String
-from ..database.connection import db
-from passlib.context import CryptoContext
+from src.database.connection import db
+from passlib.context import CryptContext
 
 class UserModel(db.Model):
     __tablename__ = "user"
@@ -11,7 +11,7 @@ class UserModel(db.Model):
     user_password = db.Column("user_password", String(255), nullable=False)
 
     # set cryptocontext
-    pwd_context = CryptoContext(schemes=["argon2"], deprecated="auto")
+    pwd_context = CryptContext(schemes=["argon2"], deprecated="auto")
 
     # hash password
     def gen_password(self, user_password):

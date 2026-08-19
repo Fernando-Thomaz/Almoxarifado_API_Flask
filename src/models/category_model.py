@@ -1,6 +1,6 @@
 from sqlalchemy import Column, String, Integer
 from sqlalchemy.orm import relationship
-from database.connection import db
+from src.database.connection import db
 
 class CategoryModel(db.Model):
     __tablename__ = "category"
@@ -9,7 +9,7 @@ class CategoryModel(db.Model):
     cate_description = db.Column("cate_description", String(120), nullable=False)
 
     #relationship
-    product = db.relationship("product", back_populates="category", cascade="all, delete-orphan")
+    product = db.relationship("ProductModel", back_populates="category", cascade="all, delete-orphan")
 
     def __init__(self, cate_description):
         self.cate_description = cate_description

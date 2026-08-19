@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String, Numeric, ForeignKey
 from sqlalchemy.orm import relationship
-from database.connection import db
+from src.database.connection import db
 
 class ProductModel(db.Model):
     __tablename__ = "product"
@@ -12,11 +12,11 @@ class ProductModel(db.Model):
     prod_unit_value = db.Column("prod_unit_value", Numeric(10,2), nullable=False)
     
     # foreign key
-    fk_cate_id = db.Column("Category.cate_id", Integer, ForeignKey("category.cate_id"), ondelete="CASCADE")
+    fk_cate_id = db.Column("fk_cate_id", Integer, ForeignKey("category.cate_id", ondelete="CASCADE"))
 
     # relationship
-    category = db.relationship("category", back_populates="product")
-    registration = db.relationship("registration", back_populates="product", cascade="all, delete-orphan")
+    category = db.relationship("CategoryModel", back_populates="product")
+    registration = db.relationship("RegistrationModel", back_populates="product", cascade="all, delete-orphan")
 
     def __init__(self, prod_name, prod_unit_measure, prod_stock, prod_unit_value, cate_id):
         self.prod_name = prod_name

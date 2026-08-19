@@ -1,5 +1,5 @@
-from schemas import usersschema, userschema
-from services import create_user, list_user, list_user_id, list_user_email, list_user_name, update_user, delete_user
+from src.schemas import usersschema, userschema
+from src.services import create_user, list_user, list_user_id, list_user_email, list_user_name, update_user, delete_user
 from flask_restful import Resource
 from flask import request, jsonify, make_response
 from src import api
@@ -27,7 +27,7 @@ class UserList(Resource):
 
     def post(self):
         """
-        Create account
+        Create user
         ---
         tags:
           - Users
@@ -197,7 +197,7 @@ class UserResourceEmail(Resource):
             return {"message":"User not found"}, 404
 
         return userschema.dump(user), 200
-api.add_resource(UserResourceEmail, "/users/<str:user_email>")
+api.add_resource(UserResourceEmail, "/users/<string:user_email>")
 
 class UserResourceName(Resource):
     def get(self, user_name):
@@ -223,4 +223,4 @@ class UserResourceName(Resource):
             return {"message":"User not found"}, 404
 
         return userschema.dump(user), 200
-api.add_resource(UserResourceName, "/users/<str:user_name>")
+api.add_resource(UserResourceName, "/users/<string:user_name>")
