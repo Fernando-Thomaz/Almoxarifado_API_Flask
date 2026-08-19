@@ -23,12 +23,13 @@ def create_app():
     # create marshmallow in app
     ma.init_app(app)
 
-    # create api for flask restful
-    api.init_app(app)
 
     # import views
     from . import views  # noqa: F401
 
+    # create api for flask restful
+    api.init_app(app)
+    
     # define swagger for api
     swagger = Swagger(
         app,
