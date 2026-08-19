@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, String
-from database.connection import db
+from ..database.connection import db
 from passlib.context import CryptoContext
 
 class UserModel(db.Model):

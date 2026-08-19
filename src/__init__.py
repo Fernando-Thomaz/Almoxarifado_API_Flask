@@ -1,16 +1,14 @@
 from flask import Flask
-from database.connection import db, ma, Config
+from .database.connection import Config, db
 from flask_marshmallow import Marshmallow
 from flask_restful import Api
+from flasgger import Swagger
 
 # define marshmallow
 ma = Marshmallow()
 
 # define api restful
 api = Api()
-
-from .models import UserModel, CategoryModel, ProductModel, RegistrationModel
-from .views import UserList, UserResourceEmail, UserResource, ProductList, ProductResource, ProductResourceName, ProductResourceCategory, CategoryList, CategoryResource, RegistrationResourceType, RegistrationResourceProduct, RegistrationResourceDate, RegistrationResource, RegistrationList
 
 def create_app():
     # create app
@@ -27,5 +25,30 @@ def create_app():
 
     # create api for flask restful
     api.init_app(app)
+
+    # define swagger for api
+    swagger = Swagger(
+        app, 
+        config={
+            # config header
+            "headers":[],
+            "specs":[
+                {
+                    # http://localhost:5012/apispec.json
+                    "endpoint":"apispec",
+                    "route":"/apispec.json",
+
+                    # include routes
+                    "rule_filter": lambda rule: True,
+
+                    # include models
+                    "model_filter": lambda tag: True,
+                },
+            ],
+            "static_url_path":"/flasgger_static",
+            "swagger_ui":True,
+            "specs_route:":"/docs"
+        }
+    )
 
     return app

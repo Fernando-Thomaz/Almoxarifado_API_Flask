@@ -7,6 +7,17 @@ from services import create_product, list_product, list_product_category, list_p
 
 class ProductList(Resource):
     def get(self):
+        """
+        List product
+        ---
+        tags:
+        - Products
+        responses:
+        200:
+            description: List product
+        404:
+            description: Product doesnt exists
+        """
         products = list_product()
 
         if not products:
@@ -15,6 +26,38 @@ class ProductList(Resource):
         return productsschema.dump(products), 200
 
     def post(self):
+        """
+        Create account
+        ---
+        tags:
+        - Products
+        parameters:
+        - in: body
+            name: body
+            required: True
+            schema:
+            type: object
+            properties:
+                name: 
+                type: string
+                example: example
+                unit_measure:
+                type: string
+                example: meters
+                stock:
+                type: integer
+                example: 10
+                unit_value:
+                type: Float
+                example: 10,2
+        responses:
+        201: 
+            description: Create account
+        409:
+            description: Product already exist
+        400:
+            description: Error requisition
+        """
         try:
             product = productschema.load(request.get_json())
 
@@ -35,6 +78,42 @@ api.add_resource(ProductList,"/products")
 
 class ProductResource(Resource):
     def put(self, prod_id):
+        """
+        Update product
+        ---
+        tags:
+        - Products
+        parameters:
+        - name: prod_id
+            in: path
+            type: integer
+            required: True
+        - in: body
+            name: body
+            required: True
+            schema:
+            type: object
+            schema:
+                name:
+                type: string
+                example: example
+                unit_measure:
+                type: string
+                example: string
+                stock:
+                type: integer:
+                example: 10
+                unit_value:
+                type: float
+                example: 10,2
+        responses:
+        200:
+            description: Update product
+        400:
+            description: Error requisition
+        404:
+            description: Product not found
+        """
         try:
             product = productschema.load(request.get_json)
 
