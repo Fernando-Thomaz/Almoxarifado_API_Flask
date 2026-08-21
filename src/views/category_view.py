@@ -55,7 +55,7 @@ class CategoryList(Resource):
         except ValidationError as err:
             return err.messages, 400
 
-        if list_category_description(category["description"]):
+        if list_category_description(category.cate_description):
             return {"message":"Category already exist"}, 409
 
         try:
@@ -95,15 +95,12 @@ class CategoryResource(Resource):
             description: Category not found
         """
         try:
-            category = categoryschema.load(request.get_json)
+            category = categoryschema.load(request.get_json())
 
         except ValidationError as err:
             return err.messages, 400
 
-        new_category = update_category(
-            cate_id,
-            {"description":category.description}
-        )
+        new_category = update_category(cate_id, category)
 
         if not new_category:
             return {"message":"Category not found"}, 404
@@ -115,7 +112,7 @@ class CategoryResource(Resource):
         Delete category
         ---
         tags:
-          - Category
+          - Categories
         parameters:
           - name: cate_id
             in: path

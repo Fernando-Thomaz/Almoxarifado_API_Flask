@@ -47,7 +47,7 @@ class RegistrationList(Resource):
                   example: 1
                 product:
                   type: integer
-                  example: 10
+                  example: 1
         responses:
           201:
             description: Registration create
@@ -109,12 +109,7 @@ class RegistrationResource(Resource):
         except ValidationError as err:
             return err.messages, 400
 
-        new_registration = update_registration(
-            regi_id,
-            {"dt":registration.dt,
-            "type":registration.type,
-            "product":registration.product}
-        )
+        new_registration = update_registration(regi_id, registration)
 
         if not new_registration:
             return {"message":"Registration not found"}, 404

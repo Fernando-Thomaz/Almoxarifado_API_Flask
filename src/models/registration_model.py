@@ -14,8 +14,3 @@ class RegistrationModel(db.Model):
 
     # relationship
     product = db.relationship("ProductModel", back_populates="registration")
-
-    def __init__(self, regi_dt, regi_type, prod_id):
-        self.regi_dt = regi_dt
-        self.regi_type = regi_type
-        self.prod_id = prod_id

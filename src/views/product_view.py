@@ -49,7 +49,10 @@ class ProductList(Resource):
                   example: 10
                 unit_value:
                   type: float
-                  example: 10,2
+                  example: 10.2
+                category:
+                  type: integer
+                  example: 1
         responses:
           201: 
             description: Create account
@@ -64,7 +67,7 @@ class ProductList(Resource):
         except ValidationError as err:
             return err.messages, 400
 
-        if list_product_name(product["name"]):
+        if list_product_name(product.prod_name):
             return {"message":"Product already exist"}, 409
 
         try:
@@ -93,7 +96,7 @@ class ProductResource(Resource):
             required: True
             schema:
               type: object
-              schema:
+              properties:
                 name:
                   type: string
                   example: example
@@ -105,7 +108,10 @@ class ProductResource(Resource):
                   example: 10
                 unit_value:
                   type: float
-                  example: 10,2
+                  example: 10.2
+                category:
+                  type: integer
+                  example: 1
         responses:
           200:
             description: Update product
@@ -115,19 +121,12 @@ class ProductResource(Resource):
             description: Product not found
         """
         try:
-            product = productschema.load(request.get_json)
+            product = productschema.load(request.get_json())
 
         except ValidationError as err:
             return err.messages, 400
 
-        new_product = update_product(
-            prod_id,
-           {"name":product.name,
-            "unit_measure":product.unit_measure,
-            "stock":product.stock,
-            "unit_value":product.unit_value,
-            "category":product.category}
-        )
+        new_product = update_product(prod_id, product)
 
         if not new_product:
             return {"message":"Product not found"}, 404
@@ -141,7 +140,7 @@ class ProductResource(Resource):
         tags:
           - Products
         parameters:
-          - name:
+          - name: prod_id
             in: path
             type: integer
             required: True
@@ -191,7 +190,7 @@ class ProductResourceCategory(Resource):
         tags:
           - Products
         parameters:
-          - name: fk_cate_id
+          - name: category
             in: path
             type: integer
             required: True

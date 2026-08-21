@@ -11,7 +11,7 @@ class UserSchema(ma.SQLAlchemyAutoSchema):
     id = fields.Int(attribute="user_id", dump_only=True)
     name = fields.String(attribute="user_name", required=True)
     email = fields.Email(attribute="user_email", required=True)
-    password = fields.String(attribute="user_password", required=True)
+    password = fields.String(attribute="user_password", required=True, load_only=True,)
 
 userschema = UserSchema()
 usersschema = UserSchema(many=True)

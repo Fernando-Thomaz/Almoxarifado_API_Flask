@@ -4,11 +4,9 @@ from ..database.connection import db
 # CREATE
 # function for create category
 def create_category(category):
-    category_db = CategoryModel(cate_description=category.description)
-
-    db.session.add(category_db)
+    db.session.add(category)
     db.session.commit()
-    return category_db
+    return category
 
 # READ
 # function for list category
@@ -16,18 +14,18 @@ def list_category():
     return CategoryModel.query.all()
 
 # function for list category with description
-def list_category_description(cate_description):
-    return CategoryModel.query.filter_by(cate_description).first()
+def list_category_description(description):
+    return CategoryModel.query.filter_by(cate_description=description).first()
 
 # UPDATE
 # function for update category
-def update_category(id, new_category):
+def update_category(id, category):
     category_finder = CategoryModel.query.get(id)
     if category_finder:
-        category_finder.cate_description = new_category["description"]
+        category_finder.cate_description = category.cate_description
 
         db.session.commit()
-        return new_category
+        return category_finder
 
     return None
 

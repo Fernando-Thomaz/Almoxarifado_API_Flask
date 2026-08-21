@@ -17,10 +17,3 @@ class ProductModel(db.Model):
     # relationship
     category = db.relationship("CategoryModel", back_populates="product")
     registration = db.relationship("RegistrationModel", back_populates="product", cascade="all, delete-orphan")
-
-    def __init__(self, prod_name, prod_unit_measure, prod_stock, prod_unit_value, cate_id):
-        self.prod_name = prod_name
-        self.prod_unit_measure = prod_unit_measure
-        self.prod_stock = prod_stock
-        self.prod_unit_value = prod_unit_value
-        self.cate_id = cate_id

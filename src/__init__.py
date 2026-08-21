@@ -20,9 +20,13 @@ def create_app():
     # create db in app
     db.init_app(app)
 
+    # register models before creating their tables
+    from . import models
+    with app.app_context():
+        db.create_all()
+
     # create marshmallow in app
     ma.init_app(app)
-
 
     # import views
     from . import views  # noqa: F401

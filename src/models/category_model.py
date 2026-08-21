@@ -10,6 +10,3 @@ class CategoryModel(db.Model):
 
     #relationship
     product = db.relationship("ProductModel", back_populates="category", cascade="all, delete-orphan")
-
-    def __init__(self, cate_description):
-        self.cate_description = cate_description

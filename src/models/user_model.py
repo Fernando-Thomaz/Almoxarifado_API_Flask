@@ -20,8 +20,3 @@ class UserModel(db.Model):
     # verify password
     def ver_password(self, user_password):
         return self.pwd_context.verify(user_password, self.user_password)
-
-    def __init__(self, user_name, user_email, user_password):
-        self.user_name = user_name
-        self.user_email = user_email
-        self.user_password = user_password

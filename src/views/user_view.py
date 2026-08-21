@@ -61,7 +61,7 @@ class UserList(Resource):
         except ValidationError as err:
             return err.messages, 400
 
-        if list_user_email(user.email):
+        if list_user_email(user.user_email):
             return {"message":"Email already exist"}, 409
 
         try:
@@ -138,12 +138,7 @@ class UserResource(Resource):
         except ValidationError as err:
             return err.messages, 400
 
-        new_user = update_user(
-            user_id, 
-            {"name":user.name,
-             "email":user.email,
-             "password":user.password}
-        )
+        new_user = update_user(user_id, user)
 
         if not new_user:
             return {"message":"User not found"}, 404
